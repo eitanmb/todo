@@ -7,6 +7,7 @@ const txtInput       = document.querySelector('.new-todo');
 const btnBorrar      = document.querySelector('.clear-completed');
 const ulFiltros      = document.querySelector('.filters');
 const anchorFiltros  = document.querySelectorAll('.filtro');
+const todoCount      = document.querySelector( '.todo-count')
 
 export const crearTodoHtml = ( todo ) => {
 
@@ -25,9 +26,25 @@ export const crearTodoHtml = ( todo ) => {
 
   divTodoList.append( div.firstElementChild );
 
+  todosPendientes();
+
   return div.firstElementChild;
 
 }
+
+const todosPendientes = () => {
+  let numPendientes = 0;
+
+  for ( const elemento of divTodoList.children ) {
+
+    if (!elemento.classList.contains('completed')) { numPendientes++; }
+
+  }
+  todoCount.innerHTML = `<b>${ numPendientes }</b> <i>pendiente(s)</i>`;
+
+}
+
+
 
 //Evento
 txtInput.addEventListener( 'keyup', ( event ) => {
@@ -57,6 +74,8 @@ divTodoList.addEventListener('click', (event) => {
     divTodoList.removeChild(todoElemento);
   }
 
+  todosPendientes();
+
 });
 
 btnBorrar.addEventListener('click', (event) => {
@@ -71,6 +90,8 @@ btnBorrar.addEventListener('click', (event) => {
 
   }
 
+  todosPendientes();
+
 });
 
 ulFiltros.addEventListener('click', (event) => {
@@ -78,7 +99,7 @@ ulFiltros.addEventListener('click', (event) => {
   const filtro = event.target.text;
   anchorFiltros.forEach( elemHtml => elemHtml.classList.remove('selected'));
   event.target.classList.add('selected');
-  
+
   if (!filtro) { return; } //Retorna nada si filtro retorna undefined
 
   for ( const elemento of divTodoList.children ) {
