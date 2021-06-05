@@ -1,14 +1,9 @@
 import './styles.css';
 import { Todo, TodoList } from './classes';
+import { crearTodoHtml } from './js/componentes.js';
 
-const todoList = new TodoList()
+export const todoList = new TodoList();
 
-const tarea1 = new Todo ( 'Aprender Python' );
-const tarea2 = new Todo ( 'Aprender Node' );
-const tarea3 = new Todo ( 'Aprender MongoDB' );
+todoList.todos.forEach( todo => crearTodoHtml(todo));
 
-todoList.nuevoTodo( tarea1 );
-todoList.nuevoTodo( tarea2 );
-todoList.nuevoTodo( tarea3 );
-
-console.log( todoList );
+console.log(todoList.todos);
